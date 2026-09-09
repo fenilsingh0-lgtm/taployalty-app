@@ -5,7 +5,7 @@ import { supabase } from './supabaseClient';
 export default function TapLoyaltyApp() {
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState(null);
-  const [view, setView] = useState('landing');
+  const [view, setView] = useState('landing'); // landing | customer | dashboard
   const [business, setBusiness] = useState(null);
   const [feedbackLog, setFeedbackLog] = useState([]);
   const [customers, setCustomers] = useState([]);
@@ -67,6 +67,7 @@ export default function TapLoyaltyApp() {
     const pointsAwarded = isLow ? 5 : 15;
 
     try {
+      // Find existing customer by phone (or name if no phone) for this business
       let customer = null;
       if (phone.trim()) {
         const { data } = await supabase
@@ -325,7 +326,7 @@ export default function TapLoyaltyApp() {
                 </div>
                 <h2 className="text-lg font-semibold mb-1">+{pointsJustEarned} points earned!</h2>
                 <p className="text-sm text-emerald-800/70 mb-5">Glad you had a great visit. One more tap helps a lot:</p>
-                
+                <a
                   href={business.google_review_link || '#'}
                   target="_blank" rel="noopener noreferrer"
                   className="w-full bg-emerald-950 text-stone-100 py-3 rounded-full font-semibold text-sm flex items-center justify-center gap-2 mb-2.5"
